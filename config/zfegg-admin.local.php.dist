@@ -7,8 +7,8 @@ return array(
                 'driver' => 'PDO_Mysql',
                 'hostname' => '',
                 'username' => 'root',
-                'password' => 'ztgame@123',
-                'dsn' => 'mysql:dbname=zfegg-admin;host=192.168.39.18;charset=utf8',
+                'password' => '',
+                'dsn' => 'mysql:dbname=zfegg-admin;host=127.0.0.1;charset=utf8',
             ),
         ),
     ),
@@ -20,10 +20,10 @@ return array(
                     'adapter' => 'ZF\\MvcAuth\\Authentication\\OAuth2Adapter',
                     'storage' => array(
                         'adapter' => 'pdo',
-                        'dsn' => 'mysql:dbname=zfegg-admin;host=192.168.39.18;charset=utf8',
+                        'dsn' => 'mysql:dbname=zfegg-admin;host=127.0.0.1;charset=utf8',
                         'route' => '/oauth',
                         'username' => 'root',
-                        'password' => 'ztgame@123',
+                        'password' => '',
                         'storage_settings' => array(
                             'auth_code_lifetime' => '2800',
                             'user_table' => 'admin_users',

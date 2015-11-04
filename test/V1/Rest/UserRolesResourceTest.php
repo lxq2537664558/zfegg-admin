@@ -25,7 +25,7 @@ class UserRolesResourceTest extends \PHPUnit_Framework_TestCase
     protected function getServices()
     {
         $configs = include __DIR__ . '/../../../config/module.config.php';
-        $configs = ArrayUtils::merge($configs, include __DIR__ . '/../../../config/zfegg-admin.local.php.dist');
+        $configs = ArrayUtils::merge($configs, include __DIR__ . '/../../../config/zfegg-admin.local.php');
         $configs = ArrayUtils::merge($configs, $this->getConfigs());
 
         $serviceConfig = new Config($configs['service_manager']);

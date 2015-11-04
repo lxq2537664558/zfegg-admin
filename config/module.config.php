@@ -92,6 +92,19 @@ return array(
                     ),
                 ),
             ),
+
+            'oauth' => array(
+                'options' => array(
+                    'defaults' => array(
+                        'oauth'     => '/oauth',
+                    ),
+                ),
+            ),
+        ),
+    ),
+    'db' => array(
+        'adapters' => array(
+            'Db\ZfeggAdmin' => array(),
         ),
     ),
     'zf-rest' => array(
@@ -794,6 +807,9 @@ return array(
         ),
     ),
     'zf-mvc-auth' => array(
+        'map' => array(
+            'Zfegg\\Admin\\V1' => 'zfegg-admin-oauth',
+        ),
         'authorization' => array(
             'Zfegg\\Admin\\V1\\Rest\\Resources\\Controller' => array(
                 'collection' => array(
@@ -995,6 +1011,12 @@ return array(
                     'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller::*' => array(),
                 ),
             ),
+        ),
+    ),
+
+    'zf-oauth2' => array(
+        'user_id' => 'user_id',
+        'storage_settings' => array(
         ),
     ),
 
