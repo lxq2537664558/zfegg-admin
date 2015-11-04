@@ -1,0 +1,27 @@
+{
+    "name": "zfegg/zfegg-admin-resource",
+    "require": {
+        "php": ">=5.5",
+        "zfcampus/zf-apigility": "~1.2.1"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "~1.0",
+        "phpunit/phpunit": "^4.7"
+    },
+    "authors": [
+        {
+            "name": "moln",
+            "email": "xiemaomao520@163.com"
+        }
+    ],
+    "autoload":{
+        "psr-4":{
+            "Zfegg\\Admin\\":"src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ZfeggTest\\Admin\\": "test/"
+        }
+    }
+}
