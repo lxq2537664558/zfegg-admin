@@ -1,5 +1,20 @@
 {
     "name": "zfegg/zfegg-admin-resource",
+    "description": "Zfegg 后台管理模块",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "zf2",
+        "zend",
+        "module",
+        "admin"
+    ],
+    "homepage": "https://github.com/zfegg/zfegg-admin",
+    "support": {
+        "email": "moln.xie@gmail.com",
+        "source": "https://github.com/zfegg/zfegg-admin",
+        "issues": "https://github.com/zfegg/zfegg-admin/issues"
+    },
     "require": {
         "php": ">=5.5",
         "zfcampus/zf-apigility": "~1.2.1"
@@ -10,8 +25,8 @@
     },
     "authors": [
         {
-            "name": "moln",
-            "email": "xiemaomao520@163.com"
+            "name": "Moln",
+            "email": "moln.xie@gmail.com"
         }
     ],
     "autoload":{
