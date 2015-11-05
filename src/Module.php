@@ -6,9 +6,6 @@ use ZF\Apigility\Provider\ApigilityProviderInterface;
 
 class Module implements ApigilityProviderInterface
 {
-    public function onBootstrap(MvcEvent $e)
-    {
-    }
 
     public function getConfig()
     {

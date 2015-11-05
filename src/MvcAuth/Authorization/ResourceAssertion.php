@@ -30,7 +30,7 @@ class ResourceAssertion implements ServiceLocatorAwareInterface, AssertionInterf
     public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
     {
         /** @var \Zend\Db\Adapter\Adapter $dbAdapter */
-        $dbAdapter = $this->getServiceLocator()->get('Zfegg\Admin');
+        $dbAdapter = $this->getServiceLocator()->get('db-zfegg-admin');
         $configs   = $this->getServiceLocator()->get('config');
         $tables    = $configs['zfegg-admin']['tables'];
 

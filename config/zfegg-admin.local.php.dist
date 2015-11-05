@@ -2,7 +2,7 @@
 return array(
     'db' => array(
         'adapters' => array(
-            'Db\ZfeggAdmin' => array(
+            'db-zfegg-admin' => array(
                 'database' => 'zfegg-admin',
                 'driver' => 'PDO_Mysql',
                 'hostname' => '',

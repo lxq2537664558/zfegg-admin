@@ -104,7 +104,7 @@ return array(
     ),
     'db' => array(
         'adapters' => array(
-            'Db\ZfeggAdmin' => array(),
+            'db-zfegg-admin' => array(),
         ),
     ),
     'zf-rest' => array(
@@ -807,8 +807,25 @@ return array(
         ),
     ),
     'zf-mvc-auth' => array(
-        'map' => array(
-            'Zfegg\\Admin\\V1' => 'zfegg-admin-oauth',
+        'authentication' => array(
+            'map' => array(
+                'Zfegg\\Admin\\V1' => 'zfegg-admin-oauth',
+            ),
+            'adapters' => array(
+                'zfegg-admin-oauth' => array(
+//                    'adapter' => 'ZF\\MvcAuth\\Authentication\\OAuth2Adapter',
+//                    'storage' => array(
+//                        'adapter' => 'pdo',
+//                        'dsn' => 'mysql:dbname=zfegg-admin;host=localhost;charset=utf8',
+//                        'route' => '/oauth',
+//                        'username' => 'root',
+//                        'password' => '',
+//                        'storage_settings' => array(
+//                            'user_table' => 'admin_users',
+//                        ),
+//                    ),
+                ),
+            ),
         ),
         'authorization' => array(
             'Zfegg\\Admin\\V1\\Rest\\Resources\\Controller' => array(
@@ -1015,9 +1032,7 @@ return array(
     ),
 
     'zf-oauth2' => array(
-        'user_id' => 'user_id',
-        'storage_settings' => array(
-        ),
+        'storage_settings' => array(),
     ),
 
     'listeners' => array(

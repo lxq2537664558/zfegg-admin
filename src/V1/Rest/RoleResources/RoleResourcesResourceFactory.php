@@ -12,7 +12,7 @@ class RoleResourcesResourceFactory
         $resultSetPrototype = new ResultSet(ResultSet::TYPE_ARRAYOBJECT, new RoleResourcesEntity());
         $table              = new TableGateway(
             $tableName,
-            $services->get('Db\ZfeggAdmin'),
+            $services->get('db-zfegg-admin'),
             null,
             $resultSetPrototype
         );
