@@ -92,6 +92,19 @@ return array(
                     ),
                 ),
             ),
+
+            'oauth' => array(
+                'options' => array(
+                    'defaults' => array(
+                        'oauth'     => '/oauth',
+                    ),
+                ),
+            ),
+        ),
+    ),
+    'db' => array(
+        'adapters' => array(
+            'db-zfegg-admin' => array(),
         ),
     ),
     'zf-rest' => array(
@@ -794,6 +807,26 @@ return array(
         ),
     ),
     'zf-mvc-auth' => array(
+        'authentication' => array(
+            'map' => array(
+                'Zfegg\\Admin\\V1' => 'zfegg-admin-oauth',
+            ),
+            'adapters' => array(
+                'zfegg-admin-oauth' => array(
+//                    'adapter' => 'ZF\\MvcAuth\\Authentication\\OAuth2Adapter',
+//                    'storage' => array(
+//                        'adapter' => 'pdo',
+//                        'dsn' => 'mysql:dbname=zfegg-admin;host=localhost;charset=utf8',
+//                        'route' => '/oauth',
+//                        'username' => 'root',
+//                        'password' => '',
+//                        'storage_settings' => array(
+//                            'user_table' => 'admin_users',
+//                        ),
+//                    ),
+                ),
+            ),
+        ),
         'authorization' => array(
             'Zfegg\\Admin\\V1\\Rest\\Resources\\Controller' => array(
                 'collection' => array(
@@ -921,64 +954,30 @@ return array(
     'zfegg-admin' => array(
         'ui_modules' => array(),
         'menus' => array(
-            0 => array(
+            array(
                 'text' => '系统',
                 'index' => 0,
                 'expanded' => true,
                 'items' => array(
-                    0 => array(
+                    array(
                         'text' => '用户管理',
                         'index' => 0,
                         'url' => '#/zfegg/admin/user',
                     ),
-                    1 => array(
+                    array(
                         'text' => '角色管理',
                         'index' => 1,
                         'url' => '#/zfegg/admin/role',
                     ),
-                    2 => array(
+                    array(
                         'text' => '权限列表',
                         'index' => 2,
                         'url' => '#/zfegg/admin/resource',
                     ),
-                    3 => array(
+                    array(
                         'text' => '个人信息',
-                        'index' => 4,
+                        'index' => 3,
                         'url' => '#/zfegg/admin/profile',
-                    ),
-                ),
-            ),
-            1 => array(
-                'text' => '模型管理',
-                'expanded' => true,
-                'items' => array(
-                    0 => array(
-                        'text' => '数据源添加',
-                        'index' => 0,
-                        'url' => '/model-manager/data-source-config/add',
-                    ),
-                    1 => array(
-                        'text' => '数据源管理',
-                        'index' => 0,
-                        'url' => '/model-manager/data-source-config/index',
-                    ),
-                    2 => array(
-                        'text' => '模型UI配置',
-                        'index' => 1,
-                        'url' => '/ui/model-manager/ui-config/index',
-                    ),
-                    3 => array(
-                        'text' => '模型UI列表',
-                        'index' => 1,
-                        'url' => '/ui/model-manager/ui-config/list',
-                    ),
-                    4 => array(
-                        'text' => '菜单配置',
-                        'url' => '/model-manager/source/view/id/4',
-                    ),
-                    5 => array(
-                        'text' => '数据源权限',
-                        'url' => './model-manager/source/view/id/2',
                     ),
                 ),
             ),
@@ -996,6 +995,10 @@ return array(
                 ),
             ),
         ),
+    ),
+
+    'zf-oauth2' => array(
+        'storage_settings' => array(),
     ),
 
     'listeners' => array(

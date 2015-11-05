@@ -10,7 +10,7 @@ class UserRolesResourceFactory
         $tables        = $services->get('config')['zfegg-admin']['tables'];
         $tableName     = $tables['user_roles'];
         $roleTableName = $tables['roles'];
-        $table         = new TableGateway($tableName, $services->get('Db\ZfeggAdmin'));
+        $table         = new TableGateway($tableName, $services->get('db-zfegg-admin'));
 
         return new UserRolesResource($table, $roleTableName);
     }
