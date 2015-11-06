@@ -18,6 +18,10 @@ class Bcrypt extends AbstractFilter
      */
     public function filter($value)
     {
+        if (empty($value)) {
+            return $value;
+        }
+
         if ($value[0] == '$' && strlen($value) > 32) {
             return $value;
         }
