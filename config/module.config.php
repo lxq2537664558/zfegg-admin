@@ -450,6 +450,9 @@ return array(
         'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Controller' => array(
             'input_filter' => 'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Validator',
         ),
+        'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller' => array(
+            'input_filter' => 'Zfegg\\Admin\\V1\\Rpc\\Profile\\Validator',
+        ),
     ),
     'input_filter_specs' => array(
         'Zfegg\\Admin\\V1\\Rest\\AdminUser\\Validator' => array(
@@ -474,6 +477,13 @@ return array(
                         ),
                     ),
                     1 => array(
+                        'name' => 'Zfegg\\Admin\\Validator\\UserPermission',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '255',
+                        ),
+                    ),
+                    2 => array(
                         'name' => 'Zend\\Validator\\StringLength',
                         'options' => array(
                             'min' => 1,
@@ -805,6 +815,76 @@ return array(
                 ),
             ),
         ),
+        'Zfegg\\Admin\\V1\\Rpc\\Profile\\Validator' => array(
+            0 => array(
+                'name' => 'password',
+                'required' => false,
+                'filters' => array(
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                    2 => array(
+                        'name' => 'Zfegg\\Admin\\Filter\\Bcrypt',
+                        'options' => array(),
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '255',
+                        ),
+                    ),
+                ),
+            ),
+            1 => array(
+                'name' => 'real_name',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '255',
+                        ),
+                    ),
+                ),
+            ),
+            2 => array(
+                'name' => 'email',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '255',
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Validator\\EmailAddress',
+                        'options' => array(),
+                    ),
+                ),
+            ),
+        ),
     ),
     'zf-mvc-auth' => array(
         'authentication' => array(
@@ -948,7 +1028,9 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Zfegg\\Admin\\V1\\Rpc\\App\\Controller' => 'Zfegg\\Admin\\V1\\Rpc\\App\\AppController',
-            'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller' => 'Zfegg\\Admin\\V1\\Rpc\\Profile\\ProfileController',
+        ),
+        'factories' => array(
+            'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller' => 'Zfegg\\Admin\\V1\\Rpc\\Profile\\ProfileControllerFactory',
         ),
     ),
     'zfegg-admin' => array(
