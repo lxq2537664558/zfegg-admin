@@ -1086,4 +1086,9 @@ return array(
     'listeners' => array(
         'Zfegg\\Admin\MvcAuth\Authorization\ResourcePermissionListener',
     ),
+    'filters' => array(
+        'invokables' => array(
+            'Zfegg\Admin\Filter\Bcrypt' => 'Zfegg\Admin\Filter\Bcrypt',
+        ),
+    ),
 );
