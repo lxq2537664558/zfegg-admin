@@ -1035,6 +1035,12 @@ return array(
     ),
     'zfegg-admin' => array(
         'ui_modules' => array(),
+        'ui_configs' => array(
+          'oauth' => array(
+              'clientId' => null,
+              'clientSecret' => null,
+          ),
+        ),
         'menus' => array(
             array(
                 'text' => '系统',

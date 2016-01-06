@@ -8,9 +8,11 @@ class AppController extends AbstractActionController
 {
     public function appAction()
     {
-        $modules = $this->getServiceLocator()->get('config')['zfegg-admin']['ui_modules'];
-
-        $viewModel = new ViewModel(['modules' => $modules]);
+        $configs = $this->getServiceLocator()->get('config')['zfegg-admin'];
+        $viewModel = new ViewModel([
+            'modules' => $configs['ui_modules'],
+            'uiConfigs' => $configs['ui_configs']
+        ]);
         $viewModel->setTemplate('zfegg-admin-ui');
         $viewModel->setTerminal(true);
 
