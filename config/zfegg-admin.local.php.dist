@@ -38,6 +38,15 @@ return array(
     ),
 
     'zfegg-admin' => array(
+        // UI Configs
+        'ui' => array(
+            'modules' => array(),
+            'requirejs_config' => array(),
+            'oauth' => array(
+                'clientId' => 1000,
+                'clientSecret' => 'testpass',
+            ),
+        ),
         'mvc-auth' => array(
             //后台账号白名单配置
             'role_whitelists' => array(
