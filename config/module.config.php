@@ -1034,12 +1034,13 @@ return array(
         ),
     ),
     'zfegg-admin' => array(
-        'ui_modules' => array(),
-        'ui_configs' => array(
-          'oauth' => array(
-              'clientId' => null,
-              'clientSecret' => null,
-          ),
+        'ui' => array(
+            'modules' => array(),
+            'oauth' => array(
+                'clientId' => null,
+                'clientSecret' => null,
+            ),
+            'title' => 'Zfegg admin',
         ),
         'menus' => array(
             array(
