@@ -6,9 +6,16 @@ use Zend\View\Model\ViewModel;
 
 class AppController extends AbstractActionController
 {
+    protected $uiConfigs;
+
+    public function __construct($uiConfigs = [])
+    {
+        $this->uiConfigs = $uiConfigs;
+    }
+
     public function appAction()
     {
-        $configs = $this->getServiceLocator()->get('config')['zfegg-admin']['ui'];
+        $configs = $this->uiConfigs;
         $viewModel = new ViewModel(['configs' => $configs]);
         $viewModel->setTemplate('zfegg-admin-ui');
         $viewModel->setTerminal(true);
