@@ -23,12 +23,8 @@ class ProfileControllerFactory implements FactoryInterface
             $serviceLocator = $serviceLocator->getServiceLocator();
         }
 
-        $configs = $serviceLocator->get('config');
-        $menus   = isset($configs['zfegg-admin']['menus']) ? $configs['zfegg-admin']['menus'] : [];
-
         return new ProfileController(
-            $serviceLocator->get('Zfegg\\Admin\\V1\\Rest\\AdminUser\\AdminUserResource'),
-            $menus
+            $serviceLocator->get('Zfegg\\Admin\\V1\\Rest\\AdminUser\\AdminUserResource')
         );
     }
 }

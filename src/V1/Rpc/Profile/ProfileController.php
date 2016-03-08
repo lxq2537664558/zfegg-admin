@@ -17,12 +17,9 @@ class ProfileController extends AbstractActionController implements InjectApplic
     /** @var  \ZF\Apigility\DbConnectedResource */
     protected $userResource;
 
-    protected $menus = [];
-
-    public function __construct($userResource, array $menus)
+    public function __construct($userResource)
     {
         $this->userResource = $userResource;
-        $this->menus = $menus;
     }
 
     public function indexAction()
@@ -38,10 +35,5 @@ class ProfileController extends AbstractActionController implements InjectApplic
         $entity = $this->userResource->fetch($this->getIdentity()->getName());
 
         return new JsonModel($entity);
-    }
-
-    public function menusAction()
-    {
-        return new JsonModel($this->menus);
     }
 }

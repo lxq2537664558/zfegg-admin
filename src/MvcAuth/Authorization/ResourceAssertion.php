@@ -2,17 +2,91 @@
 
 namespace Zfegg\Admin\MvcAuth\Authorization;
 
+use Zend\Db\Adapter\Adapter as DbAdapter;
 use Zend\Db\Sql\Sql;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Assertion\AssertionInterface;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 use Zend\Permissions\Acl\Role\RoleInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
-class ResourceAssertion implements ServiceLocatorAwareInterface, AssertionInterface
+class ResourceAssertion implements AssertionInterface
 {
-    use ServiceLocatorAwareTrait;
+    protected $roleWhitelists = [];
+
+    protected $dbAdapter;
+
+    protected $tables = [];
+
+    /**
+     * @return array
+     */
+    public function getRoleWhitelists()
+    {
+        return $this->roleWhitelists;
+    }
+
+    /**
+     * @param array $roleWhitelists
+     * @return $this
+     */
+    public function setRoleWhitelists($roleWhitelists)
+    {
+        $this->roleWhitelists = $roleWhitelists;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTables()
+    {
+        return $this->tables;
+    }
+
+    /**
+     * @param array $tables
+     * @return $this
+     */
+    public function setTables(array $tables)
+    {
+        $this->tables = $tables;
+        return $this;
+    }
+
+    /**
+     * @return DbAdapter
+     */
+    public function getDbAdapter()
+    {
+        return $this->dbAdapter;
+    }
+
+    /**
+     * @param DbAdapter $dbAdapter
+     * @return $this
+     */
+    public function setDbAdapter($dbAdapter)
+    {
+        $this->dbAdapter = $dbAdapter;
+        return $this;
+    }
+
+    public function getRolesAndResources($roleId, $resourceId)
+    {
+        $sql    = new Sql($this->getDbAdapter());
+        $select = $sql->select();
+        $select->from($this->tables['user_roles']);
+        $select->columns([]);
+        $select->join(
+            $this->tables['role_resources'],
+            sprintf('%s.role_id=%s.role_id', $this->tables['user_roles'], $this->tables['role_resources'])
+        );
+        $select->where(['user_id' => $roleId]);
+        $select->where(['resource' => $resourceId]);
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        return $statement->execute();
+    }
 
     /**
      * Returns true if and only if the assertion conditions are met
@@ -29,36 +103,26 @@ class ResourceAssertion implements ServiceLocatorAwareInterface, AssertionInterf
      */
     public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
     {
-        /** @var \Zend\Db\Adapter\Adapter $dbAdapter */
-        $dbAdapter = $this->getServiceLocator()->get('db-zfegg-admin');
-        $configs   = $this->getServiceLocator()->get('config');
-        $tables    = $configs['zfegg-admin']['tables'];
-
-        if ($this->inWhitelist($role->getRoleId(), $resource->getResourceId(), $privilege, $configs)) {
+        if ($this->inWhitelist($role->getRoleId(), $resource->getResourceId(), $privilege)) {
             return false;
         }
 
-        $sql    = new Sql($dbAdapter);
-        $select = $sql->select();
-        $select->from($tables['user_roles']);
-        $select->columns([]);
-        $select->join(
-            $tables['role_resources'],
-            sprintf('%s.role_id=%s.role_id', $tables['user_roles'], $tables['role_resources'])
-        );
-        $select->where(['user_id' => $role->getRoleId()]);
-        $select->where(['resource' => $resource->getResourceId()]);
-        $prepare = $sql->prepareStatementForSqlObject($select);
+        $rows = $this->getRolesAndResources($role->getRoleId(), $resource->getResourceId());
 
-        $methods = explode(',', $prepare->execute()->current()['methods']);
+        foreach ($rows as $row) {
+            $methods = explode(',', $row['methods']);
+            if (!in_array($privilege, $methods)) {
+                return false;
+            }
+        }
 
-        return !in_array($privilege, $methods);
+        return true;
     }
 
-    public function inWhitelist($role, $resource, $privilege, array $configs)
+    public function inWhitelist($role, $resource, $privilege)
     {
         $resource       = str_replace('\\', '-', $resource);
-        $roleWhitelists = $configs['zfegg-admin']['mvc-auth']['role_whitelists'];
+        $roleWhitelists = $this->getRoleWhitelists();
 
         foreach ($roleWhitelists as $rolePattern => $resourceWhitelists) {
             if (fnmatch($rolePattern, $role)) {
