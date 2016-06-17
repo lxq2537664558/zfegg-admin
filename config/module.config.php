@@ -3,111 +3,110 @@ return array(
     'zf-versioning' => array(
         'default_version' => 1,
         'uri' => array(
-            3 => 'zfegg-admin.rest.resources',
-            4 => 'zfegg-admin.rest.role-resources',
-            5 => 'zfegg-admin.rest.user-roles',
-            7 => 'zfegg-admin.rest.oauth-clients',
-            9 => 'zfegg-admin.rpc.profile',
-            0 => 'zfegg-admin.rest.admin-user',
-            10 => 'zfegg-admin.rest.admin-role',
-            11 => 'zfegg-admin.rpc.app',
-            12 => 'zfegg-admin.rest.menu',
+            3 => 'zfegg-admin/rest.resources',
+            4 => 'zfegg-admin/rest.role-resources',
+            5 => 'zfegg-admin/rest.user-roles',
+            7 => 'zfegg-admin/rest.oauth-clients',
+            9 => 'zfegg-admin/rpc.profile',
+            0 => 'zfegg-admin/rest.admin-user',
+            10 => 'zfegg-admin/rest.admin-role',
+            11 => 'zfegg-admin/rest.menu',
         ),
     ),
     'router' => array(
         'routes' => array(
-            'zfegg-admin.rest.resources' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/resources[/:resource]',
-                    'defaults' => array(
-                        'controller' => 'Zfegg\\Admin\\V1\\Rest\\Resources\\Controller',
-                    ),
-                ),
-            ),
-            'zfegg-admin.rest.role-resources' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/roles/:role_id/resources[/:resource]',
-                    'defaults' => array(
-                        'controller' => 'Zfegg\\Admin\\V1\\Rest\\RoleResources\\Controller',
-                    ),
-                ),
-            ),
-            'zfegg-admin.rest.user-roles' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/users/:user_id/roles[/:role_id]',
-                    'defaults' => array(
-                        'controller' => 'Zfegg\\Admin\\V1\\Rest\\UserRoles\\Controller',
-                    ),
-                ),
-            ),
-            'zfegg-admin.rest.oauth-clients' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/clients[/:client_id]',
-                    'defaults' => array(
-                        'controller' => 'Zfegg\\Admin\\V1\\Rest\\OauthClients\\Controller',
-                    ),
-                ),
-            ),
-            'zfegg-admin.rpc.profile' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/profile',
-                    'defaults' => array(
-                        'controller' => 'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
-            'zfegg-admin.rest.admin-user' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/users[/:user_id]',
-                    'defaults' => array(
-                        'controller' => 'Zfegg\\Admin\\V1\\Rest\\AdminUser\\Controller',
-                    ),
-                ),
-            ),
-            'zfegg-admin.rest.admin-role' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/roles[/:role_id]',
-                    'defaults' => array(
-                        'controller' => 'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Controller',
-                    ),
-                ),
-            ),
-            'zfegg-admin.rpc.app' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/',
-                    'defaults' => array(
-                        'controller' => 'Zfegg\\Admin\\V1\\Rpc\\App\\Controller',
-                        'action' => 'app',
-                    ),
-                ),
-            ),
             'oauth' => array(
                 'options' => array(
                     'defaults' => array(
-                        'oauth' => '/oauth',
+                        'oauth' => '/oauth'
                     ),
                 ),
             ),
-            'zfegg-admin.rest.menu' => array(
-                'type' => 'Segment',
+            'zfegg-admin' => array(
+                'type'  => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route' => '/profile/menus[/:menu_id]',
-                    'defaults' => array(
-                        'controller' => 'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller',
+                    'route' => '/zfegg-admin',
+                ),
+                'may_terminate' => false,
+                'child_routes' => array(
+                    'rest.resources' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/resources[/:resource]',
+                            'defaults' => array(
+                                'controller' => 'Zfegg\\Admin\\V1\\Rest\\Resources\\Controller',
+                            ),
+                        ),
+                    ),
+                    'rest.role-resources' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/roles/:role_id/resources[/:resource]',
+                            'defaults' => array(
+                                'controller' => 'Zfegg\\Admin\\V1\\Rest\\RoleResources\\Controller',
+                            ),
+                        ),
+                    ),
+                    'rest.user-roles' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/users/:user_id/roles[/:role_id]',
+                            'defaults' => array(
+                                'controller' => 'Zfegg\\Admin\\V1\\Rest\\UserRoles\\Controller',
+                            ),
+                        ),
+                    ),
+                    'rest.oauth-clients' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/clients[/:client_id]',
+                            'defaults' => array(
+                                'controller' => 'Zfegg\\Admin\\V1\\Rest\\OauthClients\\Controller',
+                            ),
+                        ),
+                    ),
+                    'rpc.profile' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/profile',
+                            'defaults' => array(
+                                'controller' => 'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'rest.admin-user' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/users[/:user_id]',
+                            'defaults' => array(
+                                'controller' => 'Zfegg\\Admin\\V1\\Rest\\AdminUser\\Controller',
+                            ),
+                        ),
+                    ),
+                    'rest.admin-role' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/roles[/:role_id]',
+                            'defaults' => array(
+                                'controller' => 'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Controller',
+                            ),
+                        ),
+                    ),
+                    'rest.menu' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/menus[/:menu_id]',
+                            'defaults' => array(
+                                'controller' => 'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller',
+                            ),
+                        ),
                     ),
                 ),
             ),
         ),
     ),
+
     'db' => array(
         'adapters' => array(
             'db-zfegg-admin' => array(),
@@ -116,7 +115,7 @@ return array(
     'zf-rest' => array(
         'Zfegg\\Admin\\V1\\Rest\\Resources\\Controller' => array(
             'listener' => 'Zfegg\\Admin\\V1\\Rest\\Resources\\ResourcesResource',
-            'route_name' => 'zfegg-admin.rest.resources',
+            'route_name' => 'zfegg-admin/rest.resources',
             'route_identifier_name' => 'resource',
             'collection_name' => 'resources',
             'entity_http_methods' => array(
@@ -134,7 +133,7 @@ return array(
         ),
         'Zfegg\\Admin\\V1\\Rest\\RoleResources\\Controller' => array(
             'listener' => 'Zfegg\\Admin\\V1\\Rest\\RoleResources\\RoleResourcesResource',
-            'route_name' => 'zfegg-admin.rest.role-resources',
+            'route_name' => 'zfegg-admin/rest.role-resources',
             'route_identifier_name' => 'resource',
             'collection_name' => 'role_resources',
             'entity_http_methods' => array(
@@ -157,7 +156,7 @@ return array(
         ),
         'Zfegg\\Admin\\V1\\Rest\\UserRoles\\Controller' => array(
             'listener' => 'Zfegg\\Admin\\V1\\Rest\\UserRoles\\UserRolesResource',
-            'route_name' => 'zfegg-admin.rest.user-roles',
+            'route_name' => 'zfegg-admin/rest.user-roles',
             'route_identifier_name' => 'role_id',
             'collection_name' => 'user_roles',
             'entity_http_methods' => array(
@@ -178,7 +177,7 @@ return array(
         ),
         'Zfegg\\Admin\\V1\\Rest\\OauthClients\\Controller' => array(
             'listener' => 'Zfegg\\Admin\\V1\\Rest\\OauthClients\\OauthClientsResource',
-            'route_name' => 'zfegg-admin.rest.oauth-clients',
+            'route_name' => 'zfegg-admin/rest.oauth-clients',
             'route_identifier_name' => 'client_id',
             'collection_name' => 'oauth_clients',
             'entity_http_methods' => array(
@@ -200,7 +199,7 @@ return array(
         ),
         'Zfegg\\Admin\\V1\\Rest\\AdminUser\\Controller' => array(
             'listener' => 'Zfegg\\Admin\\V1\\Rest\\AdminUser\\AdminUserResource',
-            'route_name' => 'zfegg-admin.rest.admin-user',
+            'route_name' => 'zfegg-admin/rest.admin-user',
             'route_identifier_name' => 'user_id',
             'collection_name' => 'admin_users',
             'entity_http_methods' => array(
@@ -222,7 +221,7 @@ return array(
         ),
         'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Controller' => array(
             'listener' => 'Zfegg\\Admin\\V1\\Rest\\AdminRole\\AdminRoleResource',
-            'route_name' => 'zfegg-admin.rest.admin-role',
+            'route_name' => 'zfegg-admin/rest.admin-role',
             'route_identifier_name' => 'role_id',
             'collection_name' => 'admin_roles',
             'entity_http_methods' => array(
@@ -244,7 +243,7 @@ return array(
         ),
         'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller' => array(
             'listener' => 'Zfegg\\Admin\\V1\\Rest\\Menu\\MenuResource',
-            'route_name' => 'zfegg-admin.rest.menu',
+            'route_name' => 'zfegg-admin/rest.menu',
             'route_identifier_name' => 'menu_id',
             'collection_name' => 'menus',
             'entity_http_methods' => array(
@@ -269,7 +268,6 @@ return array(
             'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller' => 'Json',
             'Zfegg\\Admin\\V1\\Rest\\AdminUser\\Controller' => 'HalJson',
             'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Controller' => 'HalJson',
-            'Zfegg\\Admin\\V1\\Rpc\\App\\Controller' => 'Json',
             'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller' => 'HalJson',
         ),
         'accept_whitelist' => array(
@@ -309,11 +307,6 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
-            'Zfegg\\Admin\\V1\\Rpc\\App\\Controller' => array(
-                0 => 'text/html',
-                1 => 'application/xhtml+xml',
-                2 => 'application/xml',
-            ),
             'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller' => array(
 //                0 => 'application/vnd.zfegg.admin.v1+json',
 //                1 => 'application/hal+json',
@@ -350,10 +343,6 @@ return array(
                 0 => 'application/vnd.zfegg-admin.v1+json',
                 1 => 'application/json',
             ),
-            'Zfegg\\Admin\\V1\\Rpc\\App\\Controller' => array(
-                0 => 'application/vnd.zfegg-admin.v1+json',
-                1 => 'application/json',
-            ),
             'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller' => array(
                 0 => 'application/vnd.zfegg.admin.v1+json',
                 1 => 'application/json',
@@ -364,85 +353,85 @@ return array(
         'metadata_map' => array(
             'Zfegg\\Admin\\V1\\Rest\\Resources\\ResourcesEntity' => array(
                 'entity_identifier_name' => 'resource',
-                'route_name' => 'zfegg-admin.rest.resources',
+                'route_name' => 'zfegg-admin/rest.resources',
                 'route_identifier_name' => 'resource',
                 'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\Resources\\ResourcesCollection' => array(
                 'entity_identifier_name' => 'resource',
-                'route_name' => 'zfegg-admin.rest.resources',
+                'route_name' => 'zfegg-admin/rest.resources',
                 'route_identifier_name' => 'resource',
                 'is_collection' => true,
             ),
             'Zfegg\\Admin\\V1\\Rest\\RoleResources\\RoleResourcesEntity' => array(
                 'entity_identifier_name' => 'resource',
-                'route_name' => 'zfegg-admin.rest.role-resources',
+                'route_name' => 'zfegg-admin/rest.role-resources',
                 'route_identifier_name' => 'resource',
                 'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\RoleResources\\RoleResourcesCollection' => array(
                 'entity_identifier_name' => 'resource',
-                'route_name' => 'zfegg-admin.rest.role-resources',
+                'route_name' => 'zfegg-admin/rest.role-resources',
                 'route_identifier_name' => 'resource',
                 'is_collection' => true,
             ),
             'Zfegg\\Admin\\V1\\Rest\\UserRoles\\UserRolesEntity' => array(
                 'entity_identifier_name' => 'role_id',
-                'route_name' => 'zfegg-admin.rest.user-roles',
+                'route_name' => 'zfegg-admin/rest.user-roles',
                 'route_identifier_name' => 'role_id',
                 'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\UserRoles\\UserRolesCollection' => array(
                 'entity_identifier_name' => 'role_id',
-                'route_name' => 'zfegg-admin.rest.user-roles',
+                'route_name' => 'zfegg-admin/rest.user-roles',
                 'route_identifier_name' => 'role_id',
                 'is_collection' => true,
             ),
             'Zfegg\\Admin\\V1\\Rest\\OauthClients\\OauthClientsEntity' => array(
                 'entity_identifier_name' => 'client_id',
-                'route_name' => 'zfegg-admin.rest.oauth-clients',
+                'route_name' => 'zfegg-admin/rest.oauth-clients',
                 'route_identifier_name' => 'client_id',
                 'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\OauthClients\\OauthClientsCollection' => array(
                 'entity_identifier_name' => 'client_id',
-                'route_name' => 'zfegg-admin.rest.oauth-clients',
+                'route_name' => 'zfegg-admin/rest.oauth-clients',
                 'route_identifier_name' => 'client_id',
                 'is_collection' => true,
             ),
             'Zfegg\\Admin\\V1\\Rest\\AdminUser\\AdminUserEntity' => array(
                 'entity_identifier_name' => 'user_id',
-                'route_name' => 'zfegg-admin.rest.admin-user',
+                'route_name' => 'zfegg-admin/rest.admin-user',
                 'route_identifier_name' => 'user_id',
                 'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\AdminUser\\AdminUserCollection' => array(
                 'entity_identifier_name' => 'user_id',
-                'route_name' => 'zfegg-admin.rest.admin-user',
+                'route_name' => 'zfegg-admin/rest.admin-user',
                 'route_identifier_name' => 'user_id',
                 'is_collection' => true,
             ),
             'Zfegg\\Admin\\V1\\Rest\\AdminRole\\AdminRoleEntity' => array(
                 'entity_identifier_name' => 'role_id',
-                'route_name' => 'zfegg-admin.rest.admin-role',
+                'route_name' => 'zfegg-admin/rest.admin-role',
                 'route_identifier_name' => 'role_id',
                 'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\AdminRole\\AdminRoleCollection' => array(
                 'entity_identifier_name' => 'role_id',
-                'route_name' => 'zfegg-admin.rest.admin-role',
+                'route_name' => 'zfegg-admin/rest.admin-role',
                 'route_identifier_name' => 'role_id',
                 'is_collection' => true,
             ),
             'Zfegg\\Admin\\V1\\Rest\\Menu\\MenuEntity' => array(
                 'entity_identifier_name' => 'id',
-                'route_name' => 'zfegg-admin.rest.menu',
+                'route_name' => 'zfegg-admin/rest.menu',
                 'route_identifier_name' => 'menu_id',
                 'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\Menu\\MenuCollection' => array(
                 'entity_identifier_name' => 'id',
-                'route_name' => 'zfegg-admin.rest.menu',
+                'route_name' => 'zfegg-admin/rest.menu',
                 'route_identifier_name' => 'menu_id',
                 'is_collection' => true,
             ),
@@ -1000,17 +989,6 @@ return array(
                     ),
                 ),
             ),
-            'Zfegg\\Admin\\V1\\Rpc\\App\\Controller' => array(
-                'actions' => array(
-                    'App' => array(
-                        'GET' => false,
-                        'POST' => false,
-                        'PUT' => false,
-                        'PATCH' => false,
-                        'DELETE' => false,
-                    ),
-                ),
-            ),
             'Zfegg\\Admin\\V1\\Rest\\AdminUser\\Controller' => array(
                 'collection' => array(
                     'GET' => true,
@@ -1024,7 +1002,7 @@ return array(
                     'POST' => false,
                     'PUT' => false,
                     'PATCH' => false,
-                    'DELETE' => false,
+                    'DELETE' => true,
                 ),
             ),
         ),
@@ -1051,23 +1029,17 @@ return array(
             ),
             'route_name' => 'zfegg-admin.rpc.profile',
         ),
-        'Zfegg\\Admin\\V1\\Rpc\\App\\Controller' => array(
-            'service_name' => 'App',
-            'http_methods' => array(
-                0 => 'GET',
-            ),
-            'route_name' => 'zfegg-admin.rpc.app',
-        ),
     ),
     'controllers' => array(
         'factories' => array(
-            'Zfegg\\Admin\\V1\\Rpc\\App\\Controller' => 'Zfegg\\Admin\\V1\\Rpc\\App\\AppControllerFactory',
             'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller' => 'Zfegg\\Admin\\V1\\Rpc\\Profile\\ProfileControllerFactory',
         ),
     ),
     'zfegg-admin' => array(
         'ui' => array(
-            'modules' => array(),
+            'modules' => array(
+                'zfegg-admin/init'
+            ),
             'oauth' => array(
                 'clientId' => null,
                 'clientSecret' => null,
@@ -1083,22 +1055,22 @@ return array(
                     0 => array(
                         'text' => '用户管理',
                         'index' => 0,
-                        'url' => '#/zfegg/admin/user',
+                        'url' => '/zfegg/admin/user',
                     ),
                     1 => array(
                         'text' => '角色管理',
                         'index' => 1,
-                        'url' => '#/zfegg/admin/role',
+                        'url' => '/zfegg/admin/role',
                     ),
                     2 => array(
                         'text' => '权限列表',
                         'index' => 2,
-                        'url' => '#/zfegg/admin/resource',
+                        'url' => '/zfegg/admin/resource',
                     ),
                     3 => array(
                         'text' => '个人信息',
                         'index' => 3,
-                        'url' => '#/zfegg/admin/profile',
+                        'url' => '/zfegg/admin/profile',
                     ),
                 ),
             ),
@@ -1130,6 +1102,13 @@ return array(
     'filters' => array(
         'invokables' => array(
             'Zfegg\\Admin\\Filter\\Bcrypt' => 'Zfegg\\Admin\\Filter\\Bcrypt',
+        ),
+    ),
+    'asset_manager' => array(
+        'resolver_configs' => array(
+            'paths' => array(
+                __DIR__ . '/../public/',
+            ),
         ),
     ),
 );
