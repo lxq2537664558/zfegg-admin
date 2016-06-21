@@ -1,4 +1,4 @@
-define('zfegg/admin/controller/profile',
+define(
     [
         'require',
         'kendo',

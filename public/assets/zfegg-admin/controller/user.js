@@ -31,6 +31,9 @@ define([
                         }
                     }
                 },
+                serverPaging: true,
+                pageSize: 25,
+
                 error: function (e) {
                     return Restful.gridErrorStatusListener(e, kGrid);
                 }
@@ -78,7 +81,6 @@ define([
         }
     });
 
-        console.log(view);
         return {
             title: '用户管理',
             content: view.render()

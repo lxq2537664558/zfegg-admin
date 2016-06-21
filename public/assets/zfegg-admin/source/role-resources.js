@@ -1,4 +1,4 @@
-define('zfegg/admin/source/role-resources',
+define(
     [
         'jquery',
         'kendo',
@@ -11,7 +11,7 @@ define('zfegg/admin/source/role-resources',
 
         var Assigner = function (role) {
             var self = this;
-            var url = config.baseUrl + '/roles/' + role.role_id + '/resources';
+            var url = config.baseUrl + '/zfegg-admin/roles/' + role.role_id + '/resources';
             var assignerSource = new Restful({
                 url:  url,
                 schema: {

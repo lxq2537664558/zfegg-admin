@@ -1,4 +1,4 @@
-define('zfegg/admin/source/roles',
+define(
     [
         'jquery',
         'kendo',
@@ -8,7 +8,7 @@ define('zfegg/admin/source/roles',
     function($, kendo, config, Restful) {
     'use strict';
 
-        var restUrl = config.baseUrl + '/roles';
+        var restUrl = config.baseUrl + '/zfegg-admin/roles';
         var dataSource = new Restful({
             url: restUrl,
             schema: {

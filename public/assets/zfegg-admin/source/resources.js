@@ -1,4 +1,4 @@
-define('zfegg/admin/source/resources',
+define(
     [
         'kendo',
         'zfegg/config',
@@ -7,7 +7,7 @@ define('zfegg/admin/source/resources',
     function(kendo, config, Restful) {
         'use strict';
 
-        var restUrl = config.baseUrl + '/resources';
+        var restUrl = config.baseUrl + '/zfegg-admin/resources';
         return new Restful({
             url: restUrl,
             schema: {

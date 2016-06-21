@@ -1,20 +1,24 @@
-define('zfegg/admin/controller/resource',
+define(
     [
-        'require',
-        'zfegg/model/view',
+        'kendo',
         'zfegg/config',
-        '../source/resources'
+        '../source/resources',
+        'text!./resource.html'
     ],
-    function (req, View, config, resources) {
+    function (kendo, config, resources, tpl) {
         'use strict';
 
-        return new View(
-            '资源管理',
-            req.toUrl('./resource.html'),
+        var view = new kendo.View(
+            tpl,
             {
                 model: {
                     dataSource: resources
                 }
             }
         );
+
+        return {
+            title:  '资源管理',
+            content: view.render()
+        };
     });
