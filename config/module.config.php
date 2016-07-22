@@ -11,6 +11,7 @@ return array(
             0 => 'zfegg-admin/rest.admin-user',
             10 => 'zfegg-admin/rest.admin-role',
             11 => 'zfegg-admin/rest.menu',
+            12 => 'zfegg-admin/rpc.suggestion',
         ),
     ),
     'router' => array(
@@ -75,10 +76,23 @@ return array(
                             ),
                         ),
                     ),
+                    'rpc.suggestion' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/users/suggestions',
+                            'defaults' => array(
+                                'controller' => 'Zfegg\\Admin\\V1\\Rpc\\Suggestion\\Controller',
+                                'action' => 'suggestion',
+                            ),
+                        ),
+                    ),
                     'rest.admin-user' => array(
                         'type' => 'Segment',
                         'options' => array(
                             'route' => '/users[/:user_id]',
+                            'constraints' => array(
+                                'user_id' => '\d+',
+                            ),
                             'defaults' => array(
                                 'controller' => 'Zfegg\\Admin\\V1\\Rest\\AdminUser\\Controller',
                             ),
@@ -269,6 +283,7 @@ return array(
             'Zfegg\\Admin\\V1\\Rest\\AdminUser\\Controller' => 'HalJson',
             'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Controller' => 'HalJson',
             'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller' => 'HalJson',
+            'Zfegg\\Admin\\V1\\Rpc\\Suggestion\\Controller' => 'Json',
         ),
         'accept_whitelist' => array(
             'Zfegg\\Admin\\V1\\Rest\\Resources\\Controller' => array(
@@ -295,7 +310,12 @@ return array(
                 0 => 'application/vnd.zfegg-admin.v1+json',
                 1 => 'application/json',
                 2 => 'application/*+json',
-                3 => 'application/x-www-form-urlencoded',
+
+            ),
+            'Zfegg\\Admin\\V1\\Rpc\\Suggestion\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/*+json',
+                2 => 'application/x-www-form-urlencoded',
             ),
             'Zfegg\\Admin\\V1\\Rest\\AdminUser\\Controller' => array(
                 0 => 'application/vnd.zfegg-admin.v1+json',
@@ -312,6 +332,7 @@ return array(
 //                1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+
         ),
         'content_type_whitelist' => array(
             'Zfegg\\Admin\\V1\\Rest\\Resources\\Controller' => array(
@@ -346,6 +367,9 @@ return array(
             'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller' => array(
                 0 => 'application/vnd.zfegg.admin.v1+json',
                 1 => 'application/json',
+            ),
+            'Zfegg\\Admin\\V1\\Rpc\\Suggestion\\Controller' => array(
+                0 => 'application/json',
             ),
         ),
     ),
@@ -1029,10 +1053,18 @@ return array(
             ),
             'route_name' => 'zfegg-admin.rpc.profile',
         ),
+        'Zfegg\\Admin\\V1\\Rpc\\Suggestion\\Controller' => array(
+            'service_name' => 'suggestion',
+            'http_methods' => array(
+                0 => 'GET',
+            ),
+            'route_name' => 'zfegg-admin/rpc.suggestion',
+        ),
     ),
     'controllers' => array(
         'factories' => array(
             'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller' => 'Zfegg\\Admin\\V1\\Rpc\\Profile\\ProfileControllerFactory',
+            'Zfegg\\Admin\\V1\\Rpc\\Suggestion\\Controller' => 'Zfegg\\Admin\\V1\\Rpc\\Suggestion\\SuggestionControllerFactory',
         ),
     ),
     'zfegg-admin' => array(

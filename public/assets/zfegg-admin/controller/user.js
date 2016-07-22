@@ -22,7 +22,7 @@ define([
                         id: "user_id",
                         fields: {
                             user_id: {type: "number", editable: false, nullable: true},
-                            account: {validation: {required: true}},
+                            username: {validation: {required: true}},
                             real_name: {validation: {required: true}},
                             email: {validation: {email: true, required: true}},
                             status: {defaultValue: 0},
@@ -44,7 +44,7 @@ define([
             },
             onEdit: function (e) {
                 if (!e.model.isNew()) {
-                    var numeric = e.container.find("input[name=account]").attr("disabled", true);
+                    var numeric = e.container.find("input[name=username]").attr("disabled", true);
                 }
             },
             onDataBound: function (e) {

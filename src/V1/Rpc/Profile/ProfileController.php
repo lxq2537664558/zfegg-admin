@@ -12,7 +12,7 @@ use Zend\View\Model\JsonModel;
  * @method \Zend\InputFilter\InputFilter getInputFilter()
  * @method \Zend\Http\PhpEnvironment\Request getRequest()
  */
-class ProfileController extends AbstractActionController implements InjectApplicationEventInterface
+class ProfileController extends AbstractActionController
 {
     /** @var  \ZF\Apigility\DbConnectedResource */
     protected $userResource;
