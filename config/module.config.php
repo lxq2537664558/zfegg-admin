@@ -366,7 +366,7 @@ return array(
                 'entity_identifier_name' => 'resource',
                 'route_name' => 'zfegg-admin.rest.resources',
                 'route_identifier_name' => 'resource',
-                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\Resources\\ResourcesCollection' => array(
                 'entity_identifier_name' => 'resource',
@@ -378,7 +378,7 @@ return array(
                 'entity_identifier_name' => 'resource',
                 'route_name' => 'zfegg-admin.rest.role-resources',
                 'route_identifier_name' => 'resource',
-                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\RoleResources\\RoleResourcesCollection' => array(
                 'entity_identifier_name' => 'resource',
@@ -390,7 +390,7 @@ return array(
                 'entity_identifier_name' => 'role_id',
                 'route_name' => 'zfegg-admin.rest.user-roles',
                 'route_identifier_name' => 'role_id',
-                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\UserRoles\\UserRolesCollection' => array(
                 'entity_identifier_name' => 'role_id',
@@ -402,7 +402,7 @@ return array(
                 'entity_identifier_name' => 'client_id',
                 'route_name' => 'zfegg-admin.rest.oauth-clients',
                 'route_identifier_name' => 'client_id',
-                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\OauthClients\\OauthClientsCollection' => array(
                 'entity_identifier_name' => 'client_id',
@@ -414,7 +414,7 @@ return array(
                 'entity_identifier_name' => 'user_id',
                 'route_name' => 'zfegg-admin.rest.admin-user',
                 'route_identifier_name' => 'user_id',
-                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\AdminUser\\AdminUserCollection' => array(
                 'entity_identifier_name' => 'user_id',
@@ -426,7 +426,7 @@ return array(
                 'entity_identifier_name' => 'role_id',
                 'route_name' => 'zfegg-admin.rest.admin-role',
                 'route_identifier_name' => 'role_id',
-                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
             ),
             'Zfegg\\Admin\\V1\\Rest\\AdminRole\\AdminRoleCollection' => array(
                 'entity_identifier_name' => 'role_id',
@@ -453,7 +453,7 @@ return array(
             'Zfegg\\Admin\\V1\\Rest\\OauthClients\\OauthClientsResource' => array(
                 'adapter_name' => 'ZfeggOauth',
                 'table_name' => 'oauth_clients',
-                'hydrator_name' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'hydrator_name' => 'Zend\\Hydrator\\ArraySerializable',
                 'controller_service_name' => 'Zfegg\\Admin\\V1\\Rest\\OauthClients\\Controller',
                 'entity_identifier_name' => 'client_id',
                 'table_service' => 'Zfegg\\Admin\\V1\\Rest\\OauthClients\\OauthClientsResource\\Table',
@@ -461,7 +461,7 @@ return array(
             'Zfegg\\Admin\\V1\\Rest\\AdminUser\\AdminUserResource' => array(
                 'adapter_name' => 'db-zfegg-admin',
                 'table_name' => 'admin_users',
-                'hydrator_name' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'hydrator_name' => 'Zend\\Hydrator\\ArraySerializable',
                 'controller_service_name' => 'Zfegg\\Admin\\V1\\Rest\\AdminUser\\Controller',
                 'entity_identifier_name' => 'user_id',
                 'table_service' => 'Zfegg\\Admin\\V1\\Rest\\AdminUser\\AdminUserResource\\Table',
@@ -469,7 +469,7 @@ return array(
             'Zfegg\\Admin\\V1\\Rest\\AdminRole\\AdminRoleResource' => array(
                 'adapter_name' => 'db-zfegg-admin',
                 'table_name' => 'admin_roles',
-                'hydrator_name' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'hydrator_name' => 'Zend\\Hydrator\\ArraySerializable',
                 'controller_service_name' => 'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Controller',
                 'entity_identifier_name' => 'role_id',
                 'table_service' => 'Zfegg\\Admin\\V1\\Rest\\AdminRole\\AdminRoleResource\\Table',
@@ -502,7 +502,7 @@ return array(
     'input_filter_specs' => array(
         'Zfegg\\Admin\\V1\\Rest\\AdminUser\\Validator' => array(
             0 => array(
-                'name' => 'account',
+                'name' => 'username',
                 'required' => true,
                 'filters' => array(
                     0 => array(
@@ -518,17 +518,10 @@ return array(
                         'options' => array(
                             'adapter' => 'db-zfegg-admin',
                             'table' => 'admin_users',
-                            'field' => 'account',
+                            'field' => 'username',
                         ),
                     ),
                     1 => array(
-                        'name' => 'Zfegg\\Admin\\Validator\\UserPermission',
-                        'options' => array(
-                            'min' => 1,
-                            'max' => '255',
-                        ),
-                    ),
-                    2 => array(
                         'name' => 'Zend\\Validator\\StringLength',
                         'options' => array(
                             'min' => 1,
@@ -626,6 +619,27 @@ return array(
                 'required' => false,
                 'filters' => array(),
                 'validators' => array(),
+            ),
+            6 => array(
+                'name' => 'department',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '255',
+                        ),
+                    ),
+                ),
             ),
         ),
         'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Validator' => array(

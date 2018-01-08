@@ -3,28 +3,14 @@
 namespace Zfegg\Admin\V1\Rpc\Profile;
 
 
-use Zend\Mvc\Controller\ControllerManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Psr\Container\ContainerInterface;
 
-class ProfileControllerFactory implements FactoryInterface
+class ProfileControllerFactory
 {
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container)
     {
-
-        if ($serviceLocator instanceof ControllerManager) {
-            $serviceLocator = $serviceLocator->getServiceLocator();
-        }
-
         return new ProfileController(
-            $serviceLocator->get('Zfegg\\Admin\\V1\\Rest\\AdminUser\\AdminUserResource')
+            $container->get('Zfegg\\Admin\\V1\\Rest\\AdminUser\\AdminUserResource')
         );
     }
 }
