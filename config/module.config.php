@@ -1127,6 +1127,7 @@ return array(
                 '*' => array(
                     'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller::*' => array(
                         0 => 'GET',
+                        1 => 'PUT',
                     ),
                     'Zfegg\Admin\V1\Rest\Menu\Controller::*' => array(
                         0 => 'GET',
