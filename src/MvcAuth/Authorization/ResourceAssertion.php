@@ -111,7 +111,7 @@ class ResourceAssertion implements AssertionInterface
 
         foreach ($rows as $row) {
             $methods = explode(',', $row['methods']);
-            if (!in_array($privilege, $methods)) {
+            if (in_array($privilege, $methods)) {
                 return false;
             }
         }
