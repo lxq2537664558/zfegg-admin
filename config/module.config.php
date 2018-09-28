@@ -1132,6 +1132,9 @@ return array(
                     'Zfegg\Admin\V1\Rest\Menu\Controller::*' => array(
                         0 => 'GET',
                     ),
+                    'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Controller::*' => array(
+                        0 => 'GET',
+                    ),
                 ),
             ),
         ),
