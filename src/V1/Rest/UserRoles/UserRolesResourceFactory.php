@@ -1,17 +1,21 @@
 <?php
+
 namespace Zfegg\Admin\V1\Rest\UserRoles;
 
-use Zend\Db\TableGateway\TableGateway;
+use Psr\Container\ContainerInterface;
 
 class UserRolesResourceFactory
 {
-    public function __invoke($services)
+    public function __invoke(ContainerInterface $container)
     {
-        $tables        = $services->get('config')['zfegg-admin']['tables'];
-        $tableName     = $tables['user_roles'];
-        $roleTableName = $tables['roles'];
-        $table         = new TableGateway($tableName, $services->get('db-zfegg-admin'));
+        $configs = $container->get('config');
+        $apigilityConfigs = $configs['zf-apigility']['db-connected'];
+        $resourceName = 'Zfegg\\Admin\\V1\\Rest\\AdminRole\\AdminRoleResource';
+        $roleTableName = $apigilityConfigs[$resourceName]['table_name'];
 
-        return new UserRolesResource($table, $roleTableName);
+        return new UserRolesResource(
+            $container->get(UserRolesResource::class . '\\Table'),
+            $roleTableName
+        );
     }
 }

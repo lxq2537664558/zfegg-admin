@@ -1,4 +1,5 @@
 <?php
+
 return array(
     'zf-versioning' => array(
         'default_version' => 1,
@@ -12,6 +13,7 @@ return array(
             10 => 'zfegg-admin.rest.admin-role',
             11 => 'zfegg-admin.rpc.app',
             12 => 'zfegg-admin.rest.menu',
+            13 => 'zfegg\\admin.rest.admin-user-menus',
         ),
     ),
     'router' => array(
@@ -100,9 +102,18 @@ return array(
             'zfegg-admin.rest.menu' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/profile/menus[/:menu_id]',
+                    'route' => '/menus[/:menu_id]',
                     'defaults' => array(
                         'controller' => 'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller',
+                    ),
+                ),
+            ),
+            'zfegg\\admin.rest.admin-user-menus' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/users/:user_id/menus[/:role_menu_id]',
+                    'defaults' => array(
+                        'controller' => 'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\Controller',
                     ),
                 ),
             ),
@@ -247,8 +258,7 @@ return array(
             'route_name' => 'zfegg-admin.rest.menu',
             'route_identifier_name' => 'menu_id',
             'collection_name' => 'menus',
-            'entity_http_methods' => array(
-            ),
+            'entity_http_methods' => array(),
             'collection_http_methods' => array(
                 0 => 'GET',
             ),
@@ -258,6 +268,28 @@ return array(
             'entity_class' => 'Zfegg\\Admin\\V1\\Rest\\Menu\\MenuEntity',
             'collection_class' => 'Zfegg\\Admin\\V1\\Rest\\Menu\\MenuCollection',
             'service_name' => 'Menu',
+        ),
+        'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\Controller' => array(
+            'listener' => 'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\AdminRoleMenusResource',
+            'route_name' => 'zfegg\\admin.rest.admin-user-menus',
+            'route_identifier_name' => 'role_menu_id',
+            'collection_name' => 'admin_role_menus',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'DELETE',
+                2 => 'PATCH',
+                3 => 'PUT',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => '30',
+            'page_size_param' => null,
+            'entity_class' => 'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\AdminRoleMenusEntity',
+            'collection_class' => 'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\AdminRoleMenusCollection',
+            'service_name' => 'admin_role_menus',
         ),
     ),
     'zf-content-negotiation' => array(
@@ -271,6 +303,7 @@ return array(
             'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Controller' => 'HalJson',
             'Zfegg\\Admin\\V1\\Rpc\\App\\Controller' => 'Json',
             'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller' => 'HalJson',
+            'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\Controller' => 'HalJson',
         ),
         'accept_whitelist' => array(
             'Zfegg\\Admin\\V1\\Rest\\Resources\\Controller' => array(
@@ -315,8 +348,11 @@ return array(
                 2 => 'application/xml',
             ),
             'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller' => array(
-//                0 => 'application/vnd.zfegg.admin.v1+json',
-//                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\Controller' => array(
+                0 => 'application/vnd.zfegg\\admin.v1+json',
+                1 => 'application/hal+json',
                 2 => 'application/json',
             ),
         ),
@@ -356,6 +392,10 @@ return array(
             ),
             'Zfegg\\Admin\\V1\\Rest\\Menu\\Controller' => array(
                 0 => 'application/vnd.zfegg.admin.v1+json',
+                1 => 'application/json',
+            ),
+            'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\Controller' => array(
+                0 => 'application/vnd.zfegg\\admin.v1+json',
                 1 => 'application/json',
             ),
         ),
@@ -446,6 +486,18 @@ return array(
                 'route_identifier_name' => 'menu_id',
                 'is_collection' => true,
             ),
+            'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\AdminRoleMenusEntity' => array(
+                'entity_identifier_name' => 'role_menu_id',
+                'route_name' => 'zfegg\\admin.rest.admin-user-menus',
+                'route_identifier_name' => 'role_menu_id',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
+            ),
+            'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\AdminRoleMenusCollection' => array(
+                'entity_identifier_name' => 'role_menu_id',
+                'route_name' => 'zfegg\\admin.rest.admin-user-menus',
+                'route_identifier_name' => 'role_menu_id',
+                'is_collection' => true,
+            ),
         ),
     ),
     'zf-apigility' => array(
@@ -474,6 +526,30 @@ return array(
                 'entity_identifier_name' => 'role_id',
                 'table_service' => 'Zfegg\\Admin\\V1\\Rest\\AdminRole\\AdminRoleResource\\Table',
             ),
+            \Zfegg\Admin\V1\Rest\RoleResources\RoleResourcesResource::class => array(
+                'adapter_name' => 'db-zfegg-admin',
+                'table_name' => 'admin_assign_role_resources',
+                'hydrator_name' => 'Zend\\Hydrator\\ArraySerializable',
+                'controller_service_name' => 'Zfegg\\Admin\\V1\\Rest\\RoleResources\\Controller',
+                'entity_identifier_name' => 'id',
+                'table_service' => \Zfegg\Admin\V1\Rest\RoleResources\RoleResourcesResource::class . '\\Table',
+            ),
+            'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\AdminRoleMenusResource' => array(
+                'adapter_name' => 'db-zfegg-admin',
+                'table_name' => 'admin_role_menus',
+                'hydrator_name' => 'Zend\\Hydrator\\ArraySerializable',
+                'controller_service_name' => 'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\Controller',
+                'entity_identifier_name' => 'role_menu_id',
+                'table_service' => 'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\AdminRoleMenusResource\\Table',
+            ),
+            'Zfegg\\Admin\\V1\\Rest\\UserRoles\\UserRolesResource' => [
+                'adapter_name' => 'db-zfegg-admin',
+                'table_name' => 'admin_assign_user_roles',
+                'hydrator_name' => 'Zend\\Hydrator\\ArraySerializable',
+                'controller_service_name' => 'Zfegg\\Admin\\V1\\Rest\\UserRoles\\Controller',
+                'entity_identifier_name' => 'role_id',
+                'table_service' => 'Zfegg\\Admin\\V1\\Rest\\UserRoles\\UserRolesResource\\Table',
+            ]
         ),
     ),
     'zf-content-validation' => array(
@@ -1041,6 +1117,38 @@ return array(
                     'DELETE' => false,
                 ),
             ),
+            'Zfegg\\Admin\\V1\\Rest\\AdminRoleMenus\\Controller' => array(
+                'collection' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+            ),
+            'Zfegg\\Admin\\V1\\Rest\\AdminRole\\Controller' => array(
+                'collection' => array(
+                    'GET' => true,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => true,
+                    'PATCH' => true,
+                    'DELETE' => true,
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -1079,72 +1187,8 @@ return array(
             'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller' => 'Zfegg\\Admin\\V1\\Rpc\\Profile\\ProfileControllerFactory',
         ),
     ),
-    'zfegg-admin' => array(
-        'ui' => array(
-            'modules' => array(),
-            'oauth' => array(
-                'clientId' => null,
-                'clientSecret' => null,
-            ),
-            'title' => 'Zfegg admin',
-        ),
-        'menus' => array(
-            0 => array(
-                'text' => '系统',
-                'index' => 0,
-                'expanded' => true,
-                'items' => array(
-                    0 => array(
-                        'text' => '用户管理',
-                        'index' => 0,
-                        'url' => '#/zfegg/admin/user',
-                    ),
-                    1 => array(
-                        'text' => '角色管理',
-                        'index' => 1,
-                        'url' => '#/zfegg/admin/role',
-                    ),
-                    2 => array(
-                        'text' => '权限列表',
-                        'index' => 2,
-                        'url' => '#/zfegg/admin/resource',
-                    ),
-                    3 => array(
-                        'text' => '个人信息',
-                        'index' => 3,
-                        'url' => '#/zfegg/admin/profile',
-                    ),
-                ),
-            ),
-        ),
-        'tables' => array(
-            'user_roles' => 'admin_assign_user_roles',
-            'role_resources' => 'admin_assign_role_resources',
-            'roles' => 'admin_roles',
-        ),
-        'mvc-auth' => array(
-            'role_whitelists' => array(
-                '*' => array(
-                    'Zfegg\\Admin\\V1\\Rpc\\Profile\\Controller::*' => array(
-                        0 => 'GET',
-                        1 => 'PUT',
-                    ),
-                    'Zfegg\Admin\V1\Rest\Menu\Controller::*' => array(
-                        0 => 'GET',
-                    ),
-                ),
-            ),
-        ),
-    ),
     'zf-oauth2' => array(
         'storage_settings' => array(),
     ),
-    'listeners' => array(
-        0 => 'Zfegg\\Admin\\MvcAuth\\Authorization\\ResourcePermissionListener',
-    ),
-    'filters' => array(
-        'invokables' => array(
-            'Zfegg\\Admin\\Filter\\Bcrypt' => 'Zfegg\\Admin\\Filter\\Bcrypt',
-        ),
-    ),
+
 );
